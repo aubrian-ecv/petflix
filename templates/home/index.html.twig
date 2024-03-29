@@ -4,6 +4,25 @@
 
 {% block body %}
 
+    <img src="{{ asset('images/banner.webp') }}" alt="logo" class="mx-auto max-h-96 w-full object-cover opacity-50" />
 
+    <div class="grid grid-cols-3 text-white max-w-7xl mx-auto gap-20 my-8">
+        <div class="flex flex-col gap-2">
+            <div class="w-full h-44 bg-white relative group">
+                <a href="" class="text-white font-bold bg-primary w-1/3 h-10 rounded-md absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden items-center justify-center group-hover:flex cursor-pointer">
+                    Voir la vidéo
+                </a>
+            </div>
+            <div class="flex items-center justify-between font-bold">
+                <h2>Titre de la vidéo</h2>
+                <span>29/03/2023</span>
+            </div>
+            <p class="text-xs">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                veniam, quis nostrud exercitation ullamco laboris nisi...
+            </p>
+        </div>
+    </div>
 
 {% endblock %}
