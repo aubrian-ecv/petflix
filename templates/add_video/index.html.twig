@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une vidéo{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        <fieldset class="grid grid-cols-2 gap-8 [&_label]:text-white [&_input]:rounded-md [&_input]:p-2 [&_textarea]:rounded-md [&_textarea]:w-full [&_textarea]:p-2">
+            <div class="flex flex-col gap-2">
+                {{ form_label(form.url) }}
+                {{ form_widget(form.url) }}
+                <small>{{ form_help(form.url) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.url) }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+
+                <small>{{ form_help(form.title) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.title) }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-2">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+
+                <small>{{ form_help(form.description) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.description) }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-2">
+                {{ form_label(form.pets) }}
+                {{ form_widget(form.pets) }}
+
+                <small>{{ form_help(form.pets) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.pets) }}
+                </div>
+            </div>
+
+            <div class="col-span-2 flex justify-center">
+                <button type="submit" class="rounded-md bg-red-500 p-2 text-white w-1/4">Ajouter la vidéo</button>
+            </div>
+        </fieldset>
+    {{ form_end(form) }}
+{% endblock %}

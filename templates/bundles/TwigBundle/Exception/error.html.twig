@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block body %}
+
+    <div class="flex flex-col gap-20 items-center">
+        <img src="{{ asset('images/404.png') }}" alt="logo" class="mx-auto max-h-96 object-contain opacity-50" />
+
+        <a href="/" class="bg-red-500 text-white p-2 rounded-md">
+            Retourner à l'accueil
+        </a>
+    </div>
+
+{% endblock %}

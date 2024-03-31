@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
 
     public function __construct()
     {
-        $this->faker = Factory::create();
+        $this->faker = Factory::create('fr_FR');
     }
 
     public function load(ObjectManager $manager): void
@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
         $members->setCity($this->faker->city);
         $manager->persist($members);
 
-        $animalTypes = ['Dog', 'Cat', 'Bird', 'Fish', 'Reptile', 'Rodent', 'Other'];
+        $animalTypes = ['Chien', 'Chat', 'Oiseau', 'Poisson', 'Reptile', 'Rongeur', 'Autre'];
         $animalTypesObject = [];
         foreach ($animalTypes as $type) {
             $petsType = new PetsType();
@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
         $petsArray = [];
         for ($i = 0; $i < 10; $i++) {
             $pets = new Pets();
-            $pets->setName($this->faker->name);
+            $pets->setName($this->faker->firstName);
             $pets->setAge($this->faker->numberBetween(1, 20));
             $pets->setArrivalDate($this->faker->dateTimeBetween('-1 years', 'now'));
             $pets->setStaff($members);
@@ -54,8 +54,8 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
             $videos = new Videos();
             $videos->setUrl("https://www.youtube.com/watch?v=" . $this->faker->uuid);
-            $videos->setTitle("Video " . $i);
-            $videos->setDescription("Description " . $i);
+            $videos->setTitle("Video " . $i + 1);
+            $videos->setDescription($this->faker->realText(255));
             $videos->setAddDate($this->faker->dateTimeBetween('-1 years', 'now'));
             for ($j = 0; $j < $this->faker->numberBetween(1, 5); $j++) {
                 $videos->addPet($petsArray[$this->faker->numberBetween(0, count($petsArray) - 1)]);
