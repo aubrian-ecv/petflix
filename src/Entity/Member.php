@@ -2,37 +2,37 @@
 
 namespace App\Entity;
 
-use App\Repository\MembersRepository;
+use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MembersRepository::class)]
-class Members
+#[ORM\Entity(repositoryClass: MemberRepository::class)]
+class Member
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 30)]
     private ?string $city = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 20)]
     private ?string $phone = null;
 
-    #[ORM\OneToMany(targetEntity: Pets::class, mappedBy: 'staff')]
-    private Collection $pets;
+    #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'member')]
+    private Collection $videos;
 
     public function __construct()
     {
-        $this->pets = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,29 +89,29 @@ class Members
     }
 
     /**
-     * @return Collection<int, Pets>
+     * @return Collection<int, Video>
      */
-    public function getPets(): Collection
+    public function getVideos(): Collection
     {
-        return $this->pets;
+        return $this->videos;
     }
 
-    public function addPet(Pets $pet): static
+    public function addVideo(Video $video): static
     {
-        if (!$this->pets->contains($pet)) {
-            $this->pets->add($pet);
-            $pet->setStaff($this);
+        if (!$this->videos->contains($video)) {
+            $this->videos->add($video);
+            $video->setMember($this);
         }
 
         return $this;
     }
 
-    public function removePet(Pets $pet): static
+    public function removeVideo(Video $video): static
     {
-        if ($this->pets->removeElement($pet)) {
+        if ($this->videos->removeElement($video)) {
             // set the owning side to null (unless already changed)
-            if ($pet->getStaff() === $this) {
-                $pet->setStaff(null);
+            if ($video->getMember() === $this) {
+                $video->setMember(null);
             }
         }
 

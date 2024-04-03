@@ -2,32 +2,32 @@
 
 namespace App\Entity;
 
-use App\Repository\AdoptersRepository;
+use App\Repository\AdopterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AdoptersRepository::class)]
-class Adopters
+#[ORM\Entity(repositoryClass: AdopterRepository::class)]
+class Adopter
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+    #[ORM\Column(length: 50)]
+    private ?string $firstName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $address = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $email = null;
 
-    #[ORM\OneToMany(targetEntity: Pets::class, mappedBy: 'adopter')]
+    #[ORM\OneToMany(targetEntity: Pet::class, mappedBy: 'adopter')]
     private Collection $pets;
 
     public function __construct()
@@ -52,14 +52,14 @@ class Adopters
         return $this;
     }
 
-    public function getFirstname(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setFirstname(string $firstname): static
+    public function setFirstName(string $firstName): static
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
@@ -89,14 +89,14 @@ class Adopters
     }
 
     /**
-     * @return Collection<int, Pets>
+     * @return Collection<int, Pet>
      */
     public function getPets(): Collection
     {
         return $this->pets;
     }
 
-    public function addPet(Pets $pet): static
+    public function addPet(Pet $pet): static
     {
         if (!$this->pets->contains($pet)) {
             $this->pets->add($pet);
@@ -106,7 +106,7 @@ class Adopters
         return $this;
     }
 
-    public function removePet(Pets $pet): static
+    public function removePet(Pet $pet): static
     {
         if ($this->pets->removeElement($pet)) {
             // set the owning side to null (unless already changed)

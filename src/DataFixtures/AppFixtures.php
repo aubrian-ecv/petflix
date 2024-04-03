@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Members;
-use App\Entity\Pets;
-use App\Entity\PetsType;
-use App\Entity\Videos;
+use App\Entity\Member;
+use App\Entity\Pet;
+use App\Entity\PetType;
+use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -22,45 +22,45 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $members = new Members();
-        $members->setName($this->faker->name);
-        $members->setEmail($this->faker->email);
-        $members->setPhone($this->faker->phoneNumber);
-        $members->setCity($this->faker->city);
-        $manager->persist($members);
+        $member = new Member();
+        $member->setName($this->faker->name);
+        $member->setEmail($this->faker->email);
+        $member->setPhone($this->faker->phoneNumber);
+        $member->setCity($this->faker->city);
+        $manager->persist($member);
 
         $animalTypes = ['Chien', 'Chat', 'Oiseau', 'Poisson', 'Reptile', 'Rongeur', 'Autre'];
         $animalTypesObject = [];
         foreach ($animalTypes as $type) {
-            $petsType = new PetsType();
-            $petsType->setLabel($type);
-            $animalTypesObject[] = $petsType;
-            $manager->persist($petsType);
+            $petType = new PetType();
+            $petType->setLabel($type);
+            $petType->setCost($this->faker->numberBetween(10, 100));
+            $animalTypesObject[] = $petType;
+            $manager->persist($petType);
         }
 
+        $videoArray = [];
+        for ($i = 0; $i < 10; $i++) {
+            $video = new Video();
+            $video->setUrl("https://www.youtube.com/watch?v=" . $this->faker->uuid);
+            $video->setTitle("Video " . $i + 1);
+            $video->setDescription($this->faker->realText(255));
+            $video->setAddDate($this->faker->dateTimeBetween('-1 years', 'now'));
+            $video->setMember($member);
+            $videoArray[] = $video;
+            $manager->persist($video);
+        }
 
         $petsArray = [];
         for ($i = 0; $i < 10; $i++) {
-            $pets = new Pets();
-            $pets->setName($this->faker->firstName);
-            $pets->setAge($this->faker->numberBetween(1, 20));
-            $pets->setArrivalDate($this->faker->dateTimeBetween('-1 years', 'now'));
-            $pets->setStaff($members);
-            $pets->setType($animalTypesObject[$this->faker->numberBetween(0, count($animalTypesObject) - 1)]);
-            $petsArray[] = $pets;
-            $manager->persist($pets);
-        }
-
-        for ($i = 0; $i < 10; $i++) {
-            $videos = new Videos();
-            $videos->setUrl("https://www.youtube.com/watch?v=" . $this->faker->uuid);
-            $videos->setTitle("Video " . $i + 1);
-            $videos->setDescription($this->faker->realText(255));
-            $videos->setAddDate($this->faker->dateTimeBetween('-1 years', 'now'));
-            for ($j = 0; $j < $this->faker->numberBetween(1, 5); $j++) {
-                $videos->addPet($petsArray[$this->faker->numberBetween(0, count($petsArray) - 1)]);
-            }
-            $manager->persist($videos);
+            $pet = new Pet();
+            $pet->setName($this->faker->firstName);
+            $pet->setAge($this->faker->numberBetween(1, 20));
+            $pet->setArrivalDate($this->faker->dateTimeBetween('-1 years', 'now'));
+            $pet->setType($animalTypesObject[$this->faker->numberBetween(0, count($animalTypesObject) - 1)]);
+            $pet->setVideo($videoArray[$this->faker->numberBetween(0, count($videoArray) - 1)]);
+            $petsArray[] = $pet;
+            $manager->persist($pet);
         }
 
         $manager->flush();

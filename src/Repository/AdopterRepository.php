@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Adopters;
+use App\Entity\Adopter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Adopters>
+ * @extends ServiceEntityRepository<Adopter>
  *
- * @method Adopters|null find($id, $lockMode = null, $lockVersion = null)
- * @method Adopters|null findOneBy(array $criteria, array $orderBy = null)
- * @method Adopters[]    findAll()
- * @method Adopters[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Adopter|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Adopter|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Adopter[]    findAll()
+ * @method Adopter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AdoptersRepository extends ServiceEntityRepository
+class AdopterRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Adopters::class);
+        parent::__construct($registry, Adopter::class);
     }
 
     //    /**
-    //     * @return Adopters[] Returns an array of Adopters objects
+    //     * @return Adopter[] Returns an array of Adopter objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -36,7 +36,7 @@ class AdoptersRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Adopters
+    //    public function findOneBySomeField($value): ?Adopter
     //    {
     //        return $this->createQueryBuilder('a')
     //            ->andWhere('a.exampleField = :val')

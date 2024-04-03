@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Videos;
+use App\Entity\Video;
 use App\Form\AddVideoType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,7 @@ class AddVideoController extends AbstractController
     public function index(Request $request, EntityManagerInterface $em): Response
     {
 
-        $video = new Videos();
+        $video = new Video();
         $video->setAddDate(new \DateTime('now'));
         $form = $this->createForm(AddVideoType::class, $video);
         $form->handleRequest($request);

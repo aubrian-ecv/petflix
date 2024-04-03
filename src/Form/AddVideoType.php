@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Pets;
-use App\Entity\Videos;
+use App\Entity\Pet;
+use App\Entity\Video;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +18,7 @@ class AddVideoType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('pets', EntityType::class, [
-                'class' => Pets::class,
+                'class' => Pet::class,
                 'choice_label' => 'name',
                 'multiple' => true,
             ])
@@ -28,7 +28,7 @@ class AddVideoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Videos::class,
+            'data_class' => Video::class,
         ]);
     }
 }

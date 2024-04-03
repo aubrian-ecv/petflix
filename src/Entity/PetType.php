@@ -2,23 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\PetsTypeRepository;
+use App\Repository\PetTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PetsTypeRepository::class)]
-class PetsType
+#[ORM\Entity(repositoryClass: PetTypeRepository::class)]
+class PetType
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 20)]
     private ?string $label = null;
 
-    #[ORM\OneToMany(targetEntity: Pets::class, mappedBy: 'type')]
+    #[ORM\Column]
+    private ?int $cost = null;
+
+    #[ORM\OneToMany(targetEntity: Pet::class, mappedBy: 'type')]
     private Collection $pets;
 
     public function __construct()
@@ -43,15 +46,27 @@ class PetsType
         return $this;
     }
 
+    public function getCost(): ?int
+    {
+        return $this->cost;
+    }
+
+    public function setCost(int $cost): static
+    {
+        $this->cost = $cost;
+
+        return $this;
+    }
+
     /**
-     * @return Collection<int, Pets>
+     * @return Collection<int, Pet>
      */
     public function getPets(): Collection
     {
         return $this->pets;
     }
 
-    public function addPet(Pets $pet): static
+    public function addPet(Pet $pet): static
     {
         if (!$this->pets->contains($pet)) {
             $this->pets->add($pet);
@@ -61,7 +76,7 @@ class PetsType
         return $this;
     }
 
-    public function removePet(Pets $pet): static
+    public function removePet(Pet $pet): static
     {
         if ($this->pets->removeElement($pet)) {
             // set the owning side to null (unless already changed)

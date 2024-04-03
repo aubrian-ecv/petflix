@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\VideosRepository;
+use App\Repository\VideoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: VideosRepository::class)]
-class Videos
+#[ORM\Entity(repositoryClass: VideoRepository::class)]
+class Video
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,16 +19,19 @@ class Videos
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $add_date = null;
+    private ?\DateTimeInterface $addDate = null;
 
-    #[ORM\ManyToMany(targetEntity: Pets::class, mappedBy: 'videos')]
+    #[ORM\ManyToOne(inversedBy: 'videos')]
+    private ?Member $member = null;
+
+    #[ORM\OneToMany(targetEntity: Pet::class, mappedBy: 'video')]
     private Collection $pets;
 
     public function __construct()
@@ -79,38 +82,53 @@ class Videos
 
     public function getAddDate(): ?\DateTimeInterface
     {
-        return $this->add_date;
+        return $this->addDate;
     }
 
-    public function setAddDate(\DateTimeInterface $add_date): static
+    public function setAddDate(\DateTimeInterface $addDate): static
     {
-        $this->add_date = $add_date;
+        $this->addDate = $addDate;
+
+        return $this;
+    }
+
+    public function getMember(): ?Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Member $member): static
+    {
+        $this->member = $member;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Pets>
+     * @return Collection<int, Pet>
      */
     public function getPets(): Collection
     {
         return $this->pets;
     }
 
-    public function addPet(Pets $pet): static
+    public function addPet(Pet $pet): static
     {
         if (!$this->pets->contains($pet)) {
             $this->pets->add($pet);
-            $pet->addVideo($this);
+            $pet->setVideo($this);
         }
 
         return $this;
     }
 
-    public function removePet(Pets $pet): static
+    public function removePet(Pet $pet): static
     {
         if ($this->pets->removeElement($pet)) {
-            $pet->removeVideo($this);
+            // set the owning side to null (unless already changed)
+            if ($pet->getVideo() === $this) {
+                $pet->setVideo(null);
+            }
         }
 
         return $this;
