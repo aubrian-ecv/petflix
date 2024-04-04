@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Member;
 use App\Entity\Pet;
 use App\Entity\Video;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,6 +22,10 @@ class AddVideoType extends AbstractType
                 'class' => Pet::class,
                 'choice_label' => 'name',
                 'multiple' => true,
+            ])
+            ->add('member', EntityType::class, [
+                'class' => Member::class,
+                'choice_label' => 'name',
             ])
         ;
     }

@@ -2,9 +2,19 @@
 
 {% block title %}Ajouter une vidéo{% endblock %}
 
+{% block javascripts %}
+<script>
+    $(document).ready(function() {
+        $('#pets').select2({
+        });
+    });
+</script>
+{% endblock %}
+
 {% block body %}
     {{ form_start(form) }}
-        <fieldset class="grid grid-cols-2 gap-8 [&_label]:text-white [&_input]:rounded-md [&_input]:p-2 [&_textarea]:rounded-md [&_textarea]:w-full [&_textarea]:p-2">
+        <h1 class="text-3xl text-white text-center font-bold py-8">Ajouter une vidéo</h1>
+        <fieldset class="grid grid-cols-2 gap-8 [&_label]:text-white [&_input]:rounded-md [&_input]:p-2 [&_select]:rounded-md [&_select]:p-2 [&_textarea]:rounded-md [&_textarea]:w-full [&_textarea]:p-2 p-4">
             <div class="flex flex-col gap-2">
                 {{ form_label(form.url) }}
                 {{ form_widget(form.url) }}
@@ -39,12 +49,26 @@
 
             <div class="flex flex-col gap-2 col-span-2">
                 {{ form_label(form.pets) }}
-                {{ form_widget(form.pets) }}
-
-                <small>{{ form_help(form.pets) }}</small>
+                <select id="pets" name="{{ field_name(form.pets) }}" multiple style="grid-column: span 2 / span 2;">
+                    {% for pet in pets %}
+                        <option value="{{ pet.id }}">{{ pet.name }}</option>
+                    {% endfor %}
+                </select>
+                <small>{{ form_help(form.description) }}</small>
 
                 <div class="form-error">
-                    {{ form_errors(form.pets) }}
+                    {{ form_errors(form.description) }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-2">
+                {{ form_label(form.member) }}
+                {{ form_widget(form.member) }}
+
+                <small>{{ form_help(form.member) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.member) }}
                 </div>
             </div>
 

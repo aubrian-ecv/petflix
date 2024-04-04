@@ -36,7 +36,7 @@ class Pet
     private ?Adopter $adopter = null;
 
     #[ORM\ManyToOne(inversedBy: 'pets')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Video $video = null;
 
     #[ORM\ManyToOne(inversedBy: 'pets')]

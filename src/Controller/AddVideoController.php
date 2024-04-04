@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Video;
 use App\Form\AddVideoType;
+use App\Repository\PetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AddVideoController extends AbstractController
 {
     #[Route('/create/video', name: 'app_add_video')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, PetRepository $petRepository): Response
     {
 
         $video = new Video();
@@ -25,8 +26,7 @@ class AddVideoController extends AbstractController
             $video = $form->getData();
 
             foreach ($video->getPets() as $pet) {
-                $pet->addVideo($video);
-                $em->persist($pet);
+                $pet->setVideo($video);
             }
 
             $em->persist($video);
@@ -37,7 +37,8 @@ class AddVideoController extends AbstractController
 
         return $this->render('add_video/index.html.twig', [
             'controller_name' => 'AddVideoController',
-            'form' => $form
+            'form' => $form,
+            'pets' => $petRepository->findBy(["video" => null])
         ]);
     }
 }
