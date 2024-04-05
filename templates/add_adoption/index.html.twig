@@ -2,6 +2,15 @@
 
 {% block title %}Créer une adoption{% endblock %}
 
+{% block javascripts %}
+<script>
+    $(document).ready(function() {
+        $('#pets').select2({
+        });
+    });
+</script>
+{% endblock %}
+
 {% block body %}
     <h1 class="text-3xl text-white text-center font-bold py-8">Créer une adoption</h1>
     

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Adopter;
 use App\Entity\Pet;
 use App\Repository\PetRepository;
+use DateInterval;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,6 +49,9 @@ class AddAdoptionController extends AbstractController
             foreach ($data['pets'] as $pet) {
                 $pet->setAdopter($adopter);
                 $pet->setAdoptionDate($data['date']);
+                $controlDate = (clone $data['date'])->add(new DateInterval("P6M"));
+                $pet->setControlDate($controlDate);
+                $pet->setTotalCost($pet->getType()->getCost() + 10);
             }
 
             $em->flush();
