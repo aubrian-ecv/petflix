@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une adoption{% endblock %}
+
+{% block body %}
+    <h1 class="text-3xl text-white text-center font-bold py-8">Créer une adoption</h1>
+    
+    {{ form_start(form) }}
+        <fieldset class="grid grid-cols-2 gap-8 [&_label]:text-white [&_input]:rounded-md [&_input]:p-2 [&_select]:rounded-md [&_select]:p-2 [&_textarea]:rounded-md [&_textarea]:w-full [&_textarea]:p-2 p-4">
+            <div class="flex flex-col gap-2">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                <small>{{ form_help(form.name) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                {{ form_label(form.firstName) }}
+                {{ form_widget(form.firstName) }}
+
+                <small>{{ form_help(form.firstName) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.firstName) }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-2">
+                {{ form_label(form.address) }}
+                {{ form_widget(form.address) }}
+
+                <small>{{ form_help(form.address) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.address) }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-2">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+
+                <small>{{ form_help(form.email) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.email) }}
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 col-span-2">
+                {{ form_label(form.pets) }}
+                <select id="pets" name="{{ field_name(form.pets) }}" multiple style="grid-column: span 2 / span 2;">
+                    {% for pet in pets %}
+                        <option value="{{ pet.id }}">{{ pet.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="flex flex-col gap-2 col-span-2">
+                {{ form_label(form.date) }}
+                {{ form_widget(form.date) }}
+
+                <small>{{ form_help(form.date) }}</small>
+
+                <div class="form-error">
+                    {{ form_errors(form.date) }}
+                </div>
+            </div>
+
+            <div class="col-span-2 flex justify-center">
+                <button type="submit" class="rounded-md bg-red-500 p-2 text-white w-1/4">Créer l'adoption</button>
+            </div>
+        </fieldset>
+    {{ form_end(form) }}
+
+    {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+    {% endfor %}
+{% endblock %}
