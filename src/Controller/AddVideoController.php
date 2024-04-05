@@ -25,6 +25,17 @@ class AddVideoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $video = $form->getData();
 
+            // Check if $video->getUrl() is like "https://www.youtube.com/watch?v=video_id"
+            if (preg_match('/^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $video->getUrl(), $matches)) {
+                $video->setUrl("https://www.youtube.com/embed/" . $matches[1]);
+            } else {
+                // Check if $video->getUrl() is like "https://www.youtube.com/embed/video_id"
+                if (!preg_match('/^https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9_-]+)/', $video->getUrl(), $matches)) {
+                    $this->addFlash('error', 'Invalid URL');
+                    return $this->redirectToRoute('app_add_video');
+                }
+            }
+
             foreach ($video->getPets() as $pet) {
                 $pet->setVideo($video);
             }
