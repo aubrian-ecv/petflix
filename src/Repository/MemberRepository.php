@@ -21,6 +21,16 @@ class MemberRepository extends ServiceEntityRepository
         parent::__construct($registry, Member::class);
     }
 
+    public function findCities(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m.city')
+            ->distinct()
+            ->orderBy('m.city', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Membre[] Returns an array of Membre objects
     //     */
