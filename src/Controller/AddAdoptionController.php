@@ -38,6 +38,12 @@ class AddAdoptionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+
+            if (count($data['pets']) == 0) {
+                $this->addFlash('error', 'Vous devez sélectionner au moins un animal');
+                return $this->redirectToRoute('app_add_adoption');
+            }
+
             $adopter = new Adopter();
             $adopter->setName($data['name']);
             $adopter->setFirstName($data['firstName']);
@@ -56,7 +62,7 @@ class AddAdoptionController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', "gg");
+            $this->addFlash('success', "L'adoption a bien été enregistrée");
             return $this->redirectToRoute('app_add_adoption');
         }
 

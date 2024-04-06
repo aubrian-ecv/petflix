@@ -15,6 +15,7 @@ class VideoPageController extends AbstractController
         $video = $videoRepository->find($id);
 
         if (!$video) {
+            $this->addFlash('error', 'The video does not exist');
             throw $this->createNotFoundException('The video does not exist');
         }
         

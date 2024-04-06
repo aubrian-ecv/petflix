@@ -1,0 +1,7 @@
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="p-4 m-4 text-sm rounded-lg bg-gray-800 text-white" style="background-color: var(--{{ label }});" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}

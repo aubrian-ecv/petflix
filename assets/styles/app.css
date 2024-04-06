@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --success: #2ecc71;
+    --error: #e74c3c;
+    --warning: #f39c12;
+}
