@@ -21,6 +21,19 @@ class PetRepository extends ServiceEntityRepository
         parent::__construct($registry, Pet::class);
     }
 
+    public function findPetsWithUpcomingControls()
+    {
+        $qb = $this->createQueryBuilder('pet');
+
+        $qb->join('pet.adopter', 'adopter')
+        ->where('pet.controlDate > :now')
+        ->setParameter('now', new \DateTime())
+        ->orderBy('adopter.id', 'ASC')
+        ->addOrderBy('pet.controlDate', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Pet[] Returns an array of Pet objects
     //     */

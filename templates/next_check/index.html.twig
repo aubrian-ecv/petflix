@@ -7,26 +7,30 @@
 <div class="max-w-7xl mx-auto my-20 flex flex-col gap-20">
     <h1 class="text-white font-bold text-4xl text-center">Prochains contrôles</h1>
     <div class="grid grid-cols-4 gap-5">
-        <div class="bg-white text-black rounded-lg p-5 flex flex-col gap-5">
-            <div class="flex flex-col">
-                <span class="font-bold text-xl">28/09/2024</span>
-                <span class="font-bold">Aubrian</span>
-            </div>
-            <div>
-                <span class="font-bold">Animaux concernés :</span>
-                <ul class="list-disc list-inside">
-                    <li>Lohan</li>
-                    <li>Lohan</li>
-                <ul>
-            </div>
-            <div>
-                <span class="font-bold">Adoptant :</span>
-                <div class="flex flex-col">
-                    <span>Lohan Dancuo</span>
-                    <span>21 rue du Molinel, 59000 Lille</span>
+        {% for control in controls %}
+            {% for date in control.control_dates|keys %}
+                <div class="bg-white text-black rounded-lg p-5 flex flex-col gap-5">
+                    <div class="flex flex-col">
+                        <span class="font-bold text-xl">{{ date|date('d/m/Y') }}</span>
+                    </div>
+                    <div>
+                        <span class="font-bold">Animaux concernés :</span>
+                        <ul class="list-disc list-inside">
+                            {% for pet in control.control_dates[date] %}
+                                <li>{{ pet.name }}</li>
+                            {% endfor %}
+                        <ul>
+                    </div>
+                    <div>
+                        <span class="font-bold">Adoptant :</span>
+                        <div class="flex flex-col">
+                            <span>{{ control.adopter.name }} {{ control.adopter.firstName }}</span>
+                            <span>{{ control.adopter.address }}</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            {% endfor %}
+        {% endfor %}
     </div>
 </div>
 
