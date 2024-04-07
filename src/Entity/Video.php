@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video
@@ -17,21 +18,27 @@ class Video
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['video'])]
     private ?string $url = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['video'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['video'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['video'])]
     private ?\DateTimeInterface $addDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'videos')]
+    #[Groups(['video'])]
     private ?Member $member = null;
 
     #[ORM\OneToMany(targetEntity: Pet::class, mappedBy: 'video')]
+    #[Groups(['video'])]
     private Collection $pets;
 
     public function __construct()

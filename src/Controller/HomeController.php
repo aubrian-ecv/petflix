@@ -28,17 +28,45 @@ class HomeController extends AbstractController
     {
         $parameters = json_decode($req->getContent(), true);
 
-        if (count($parameters['petTypes']) == 0 && count($parameters['cities']) == 0)
-            return $this->json($videoRepository->findAll());
+        if (count($parameters['petTypes']) == 0 && count($parameters['cities']) == 0) {
+            $resultsHtml = $this->renderView('home/_video.html.twig', [
+                'videos' => $videoRepository->findAll()
+            ]);
+            return $this->json(["results" => $resultsHtml], Response::HTTP_OK, [], ['groups' => 'video']);
+        }
 
         $videos = $videoRepository->findAll();
 
         $filteredVideos = [];
 
         foreach ($videos as $video) {
+            // If parameter petTypes is not empty and parameter cities is empty, filter by petTypes
+            if (count($parameters['petTypes']) > 0 && count($parameters['cities']) == 0) {
+                foreach ($parameters['petTypes'] as $petType) {
+                    if ($video->getPets()->exists(fn($key, $pet) => $pet->getType()->getId() == $petType))
+                        $filteredVideos[] = $video;
+                }
+            }
             
+            // If parameter petTypes is empty and parameter cities is not empty, filter by cities
+            if (count($parameters['petTypes']) == 0 && count($parameters['cities']) > 0) {
+                if (in_array($video->getMember()->getCity(), $parameters['cities']))
+                    $filteredVideos[] = $video;
+            }
+
+            // If parameter petTypes and cities are not empty, filter by petTypes and cities
+            if (count($parameters['petTypes']) > 0 && count($parameters['cities']) > 0) {
+                foreach ($parameters['petTypes'] as $petType) {
+                    if ($video->getPets()->exists(fn($key, $pet) => $pet->getType()->getId() == $petType) && in_array($video->getMember()->getCity(), $parameters['cities']))
+                        $filteredVideos[] = $video;
+                }
+            }
         }
 
-        return $this->json($filteredVideos);
+        $resultsHtml = $this->renderView('home/_video.html.twig', [
+            'videos' => $filteredVideos
+        ]);
+
+        return $this->json(['results' => $resultsHtml], Response::HTTP_OK, [], ['groups' => 'video']);
     }
 }

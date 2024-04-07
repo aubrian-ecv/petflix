@@ -6,6 +6,7 @@ use App\Repository\AdopterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AdopterRepository::class)]
 class Adopter
@@ -16,15 +17,19 @@ class Adopter
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['video'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['video'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['video'])]
     private ?string $address = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['video'])]
     private ?string $email = null;
 
     #[ORM\OneToMany(targetEntity: Pet::class, mappedBy: 'adopter')]

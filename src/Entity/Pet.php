@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PetRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PetRepository::class)]
 class Pet
@@ -15,24 +16,31 @@ class Pet
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['video'])]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups(['video'])]
     private ?int $age = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['video'])]
     private ?\DateTimeInterface $arrivalDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['video'])]
     private ?\DateTimeInterface $adoptionDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['video'])]
     private ?\DateTimeInterface $controlDate = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['video'])]
     private ?int $totalCost = null;
 
     #[ORM\ManyToOne(inversedBy: 'pets')]
+    #[Groups(['video'])]
     private ?Adopter $adopter = null;
 
     #[ORM\ManyToOne(inversedBy: 'pets')]
@@ -41,6 +49,7 @@ class Pet
 
     #[ORM\ManyToOne(inversedBy: 'pets')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['video'])]
     private ?PetType $type = null;
 
     public function getId(): ?int

@@ -6,6 +6,7 @@ use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 class Member
@@ -16,15 +17,19 @@ class Member
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['video'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 30)]
+    #[Groups(['video'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['video'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 20)]
+    #[Groups(['video'])]
     private ?string $phone = null;
 
     #[ORM\OneToMany(targetEntity: Video::class, mappedBy: 'member')]

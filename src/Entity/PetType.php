@@ -6,6 +6,7 @@ use App\Repository\PetTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PetTypeRepository::class)]
 class PetType
@@ -16,9 +17,11 @@ class PetType
     private ?int $id = null;
 
     #[ORM\Column(length: 20)]
+    #[Groups(['video'])]
     private ?string $label = null;
 
     #[ORM\Column]
+    #[Groups(['video'])]
     private ?int $cost = null;
 
     #[ORM\OneToMany(targetEntity: Pet::class, mappedBy: 'type')]
