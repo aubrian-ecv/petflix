@@ -17,7 +17,7 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'videos' => $videoRepository->findAll(),
+            'videos' => $videoRepository->findBy([], ['addDate' => 'ASC']),
             'types' => $petTypeRepository->findAll(),
             'cities' => $memberRepository->findCities()
         ]);
@@ -30,7 +30,7 @@ class HomeController extends AbstractController
 
         if (count($parameters['petTypes']) == 0 && count($parameters['cities']) == 0) {
             $resultsHtml = $this->renderView('home/_video.html.twig', [
-                'videos' => $videoRepository->findAll()
+                'videos' => $videoRepository->findBy([], ['addDate' => 'ASC'])
             ]);
             return $this->json(["results" => $resultsHtml], Response::HTTP_OK, [], ['groups' => 'video']);
         }
@@ -62,6 +62,12 @@ class HomeController extends AbstractController
                 }
             }
         }
+
+        usort($filteredVideos, function($a, $b) {
+            $dateA = $a->getAddDate()->format('Y-m-d H:i:s');
+            $dateB = $b->getAddDate()->format('Y-m-d H:i:s');
+            return strtotime($dateA) - strtotime($dateB);
+        });
 
         $resultsHtml = $this->renderView('home/_video.html.twig', [
             'videos' => $filteredVideos
