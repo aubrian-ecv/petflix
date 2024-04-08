@@ -13,6 +13,17 @@
         <p class="text-xs">
             {{ video.description }}
         </p>
+        <div class="flex flex-wrap items-center gap-3">
+            {% set encounteredTypes = [] %}
+            {% for pet in video.pets %}
+                {% if pet.type.label not in encounteredTypes %}
+                    {% set encounteredTypes = encounteredTypes|merge([pet.type.label]) %}
+                    <span class="bg-primary rounded-md text-white px-3 py-1">
+                        {{ pet.type.label }}
+                    </span>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 {% else %}
     <div>No results found.</div>
