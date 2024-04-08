@@ -12,69 +12,71 @@
 {% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
+    <div class="max-w-7xl mx-auto">
         <h1 class="text-3xl text-white text-center font-bold py-8">Ajouter une vidéo</h1>
-        <fieldset class="grid grid-cols-2 gap-8 [&_label]:text-white [&_input]:rounded-md [&_input]:p-2 [&_select]:rounded-md [&_select]:p-2 [&_textarea]:rounded-md [&_textarea]:w-full [&_textarea]:p-2 p-4">
-            <div class="flex flex-col gap-2">
-                {{ form_label(form.url) }}
-                {{ form_widget(form.url) }}
-                <small>{{ form_help(form.url) }}</small>
+        {{ form_start(form) }}
+            <fieldset class="grid grid-cols-2 gap-8 [&_label]:text-white [&_input]:rounded-md [&_input]:p-2 [&_select]:rounded-md [&_select]:p-2 [&_textarea]:rounded-md [&_textarea]:w-full [&_textarea]:p-2 p-4">
+                <div class="flex flex-col gap-2">
+                    {{ form_label(form.url) }}
+                    {{ form_widget(form.url) }}
+                    <small>{{ form_help(form.url) }}</small>
 
-                <div class="form-error">
-                    {{ form_errors(form.url) }}
+                    <div class="form-error">
+                        {{ form_errors(form.url) }}
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex flex-col gap-2">
-                {{ form_label(form.title) }}
-                {{ form_widget(form.title) }}
+                <div class="flex flex-col gap-2">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
 
-                <small>{{ form_help(form.title) }}</small>
+                    <small>{{ form_help(form.title) }}</small>
 
-                <div class="form-error">
-                    {{ form_errors(form.title) }}
+                    <div class="form-error">
+                        {{ form_errors(form.title) }}
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex flex-col gap-2 col-span-2">
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description) }}
+                <div class="flex flex-col gap-2 col-span-2">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description) }}
 
-                <small>{{ form_help(form.description) }}</small>
+                    <small>{{ form_help(form.description) }}</small>
 
-                <div class="form-error">
-                    {{ form_errors(form.description) }}
+                    <div class="form-error">
+                        {{ form_errors(form.description) }}
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex flex-col gap-2 col-span-2">
-                {{ form_label(form.pets) }}
-                <select id="pets" name="{{ field_name(form.pets) }}" multiple style="grid-column: span 2 / span 2;">
-                    {% for pet in pets %}
-                        <option value="{{ pet.id }}">{{ pet.name }}</option>
-                    {% endfor %}
-                </select>
-                <small>{{ form_help(form.description) }}</small>
+                <div class="flex flex-col gap-2 col-span-2">
+                    {{ form_label(form.pets) }}
+                    <select id="pets" name="{{ field_name(form.pets) }}" multiple style="grid-column: span 2 / span 2;">
+                        {% for pet in pets %}
+                            <option value="{{ pet.id }}">{{ pet.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <small>{{ form_help(form.description) }}</small>
 
-                <div class="form-error">
-                    {{ form_errors(form.description) }}
+                    <div class="form-error">
+                        {{ form_errors(form.description) }}
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex flex-col gap-2 col-span-2">
-                {{ form_label(form.member) }}
-                {{ form_widget(form.member) }}
+                <div class="flex flex-col gap-2 col-span-2">
+                    {{ form_label(form.member) }}
+                    {{ form_widget(form.member) }}
 
-                <small>{{ form_help(form.member) }}</small>
+                    <small>{{ form_help(form.member) }}</small>
 
-                <div class="form-error">
-                    {{ form_errors(form.member) }}
+                    <div class="form-error">
+                        {{ form_errors(form.member) }}
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-span-2 flex justify-center">
-                <button type="submit" class="rounded-md bg-red-500 p-2 text-white w-1/4">Ajouter la vidéo</button>
-            </div>
-        </fieldset>
-    {{ form_end(form) }}
+                <div class="col-span-2 flex justify-center">
+                    <button type="submit" class="rounded-md bg-primary p-2 text-white w-1/4">Ajouter la vidéo</button>
+                </div>
+            </fieldset>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
