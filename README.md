@@ -38,7 +38,7 @@ Importer le fichier petflix.sql situé à la racine du projet dans votre systèm
 symfony serve
 ```
 
-[!CAUTION]
+> [!CAUTION]
 > Nécessaire pour compiler les classes tailwind dans un fichier css
 ```
 npm run watch OU npm run build
