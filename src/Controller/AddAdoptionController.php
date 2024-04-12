@@ -32,7 +32,7 @@ class AddAdoptionController extends AbstractController
                 'choice_label' => 'name',
                 'multiple' => true,
             ])
-            ->add('date', DateType::class)
+            ->add('date')
             ->getForm();
         $form->handleRequest($request);
 
@@ -54,8 +54,8 @@ class AddAdoptionController extends AbstractController
 
             foreach ($data['pets'] as $pet) {
                 $pet->setAdopter($adopter);
-                $pet->setAdoptionDate($data['date']);
-                $controlDate = (clone $data['date'])->add(new DateInterval("P6M"));
+                $pet->setAdoptionDate(new DateTime($data['date']));
+                $controlDate = (new DateTime($data['date']))->add(new DateInterval("P6M"));
                 $pet->setControlDate($controlDate);
                 $pet->setTotalCost($pet->getType()->getCost() + 10);
             }
