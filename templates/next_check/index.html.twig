@@ -15,9 +15,9 @@
                     </div>
                     <div>
                         <span class="font-bold">Animaux concernés :</span>
-                        <ul class="list-disc list-inside">
+                        <ul class="list-disc list-inside space-y-4">
                             {% for pet in control.control_dates[date] %}
-                                <li>{{ pet.name }}</li>
+                                <li>{{ pet.type.label }} | <span class="font-medium">{{ pet.name }}</span> <br /> géré par {{ pet.video.member.name }}</li>
                             {% endfor %}
                         <ul>
                     </div>
