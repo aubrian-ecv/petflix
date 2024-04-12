@@ -31,3 +31,15 @@ Créer une base de donnée avec le nom renseigné à la fin de la variable DATAB
 Dans notre cas il faut que le nom soit `petflix`.
 
 Importer le fichier petflix.sql situé à la racine du projet dans votre système de gestion de base de donnée.
+
+## Lancement du serveur
+
+```
+symfony serve
+```
+
+[!CAUTION]
+> Nécessaire pour compiler les classes tailwind dans un fichier css
+```
+npm run watch OU npm run build
+```
